@@ -1,66 +1,40 @@
-# \# Parcial - App Cine (7502420046\_18\_appcine\_v2)
+# Parcial - App Cine (7502420046_18_appcine_v2)
+**Alumno:** Kevin Antonio González  
+**Repositorio:** https://github.com/kevin250313/parcial-bases-datos-kevin
 
-# \*\*Alumno:\*\* Kevin Antonio González  
+---
 
-# \*\*Repositorio:\*\* https://github.com/kevin250313/parcial-bases-datos-kevin
+## Descripción
+Proyecto final de la asignatura **Bases de Datos**. CAE: **AppCine**.  
+La base de datos se desarrolló en **MySQL 8.0** y contiene tablas sobre películas, funciones, cines, reservas, promociones, calificaciones y adaptaciones.
 
-# 
+---
 
-# ---
+## Estructura del repositorio
+- `/sql/`
+  - `crud_demo.sql`              ← ejemplos prácticos de INSERT / UPDATE / DELETE + verificaciones
+  - `selects_obligatorias.sql`   ← 5 consultas SELECT requeridas
+  - `data_7502420046.sql`        ← dump (si lo subes)
+- `/docs/`
+  - `informe.pdf`                ← informe técnico (portada, explicaciones, capturas)
+  - `output_crud.txt`            ← salida de ejecución CRUD (opcional)
+  - `output_selects.txt`         ← salida de ejecución de SELECTs (opcional)
+- `examen final.pdf`             ← (tu informe en la raíz si prefieres)
+- `README.md`
 
-# 
+---
 
-# \## Descripción
+## Scripts incluidos (Resumen)
+- `sql/crud_demo.sql`: inserta una película de prueba, actualiza, elimina y muestra verificaciones; además inserta y elimina reservas y clientes de ejemplo.  
+- `sql/selects_obligatorias.sql`: 5 consultas adaptadas a tu BD (películas en cartelera hoy, búsqueda por título, mejor calificadas, promociones vigentes por cine, funciones de una película).
 
-# Repositorio del examen final - Asignatura: \*\*Bases de Datos\*\*.  
+---
 
-# Contiene los scripts SQL, evidencias y el informe técnico del CAE \*\*AppCine\*\* (base de datos: `7502420046\_18\_appcine\_v2`) desarrollada en MySQL 8.0.
-
-# 
-
-# \## Estructura del repositorio
-
-# \- `/sql/`
-
-# &nbsp; - `data\_7502420046.sql`         ← dump (estructura + datos) (generado con mysqldump)
-
-# &nbsp; - `crud\_demo.sql`              ← ejemplos de INSERT / UPDATE / DELETE + verificaciones
-
-# &nbsp; - `selects\_obligatorias.sql`   ← 5 consultas SELECT requeridas por la prueba
-
-# \- `/docs/`
-
-# &nbsp; - `informe.pdf`                ← informe técnico (portada, explicaciones, capturas)
-
-# &nbsp; - `output\_crud.txt`            ← salida (o capturas) de la ejecución CRUD
-
-# &nbsp; - `output\_selects.txt`         ← salida (o capturas) de las 5 SELECT
-
-# \- `examen final.pdf`             ← (si prefieres otro nombre del informe)
-
-# \- `README.md`
-
-# 
-
-# \## Requisitos
-
-# \- MySQL Server 8.0 instalado y corriendo.
-
-# \- MySQL Workbench o MySQL Command Line Client.
-
-# \- (Opcional) Git / GitHub Desktop para gestor de repositorios.
-
-# 
-
-# \## Cómo ejecutar (CLI)
-
-# 1\. Abrir terminal (CMD / PowerShell).
-
-# 2\. Importar datos si se necesita (si ya existe la BD, saltar):
-
-# &nbsp;  ```bash
-
-# &nbsp;  mysql -u root -p < sql/data\_7502420046.sql
+## Cómo ejecutar (MySQL CLI)
+1. Abrir CMD/PowerShell.
+2. Ir a la carpeta del repo local si necesitas importar:  
+   ```bash
+   cd "C:\Users\LENOVO\Documents\GitHub\parcial-bases-datos-kevin"
 
 .
 
