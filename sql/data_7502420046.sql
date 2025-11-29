@@ -562,3 +562,89 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-11-28  8:39:08
+
+
+SELECT * FROM adaptaciones;
+
+
+
+USE 7502420046_18_appcine_v2;
+
+-- 1) Películas en cartelera para el día de hoy
+SELECT p.pelicula_id, p.titulo, f.funcion_id, f.fecha, f.hora, s.nombre AS sala, c.nombre AS cine
+FROM peliculas p
+JOIN funciones f ON p.pelicula_id = f.pelicula_id
+JOIN salas s ON f.sala_id = s.sala_id
+JOIN cines c ON s.cine_id = c.cine_id
+WHERE f.fecha = CURDATE()
+ORDER BY f.hora;
+
+-- 2) Buscar películas por título (ej.: 'Aventura') — parámetro: '%Aventura%'
+SELECT pelicula_id, titulo, genero, duracion, anio_produccion
+FROM peliculas
+WHERE titulo LIKE '%Aventura%';
+
+-- 3) Películas mejor calificadas (promedio)
+SELECT p.pelicula_id, p.titulo, ROUND(AVG(ca.puntuacion),2) AS promedio_puntuacion, COUNT(ca.calificacion_id) AS num_opiniones
+FROM peliculas p
+JOIN calificaciones ca ON p.pelicula_id = ca.pelicula_id
+GROUP BY p.pelicula_id, p.titulo
+HAVING COUNT(ca.calificacion_id) >= 1
+ORDER BY promedio_puntuacion DESC
+LIMIT 10;
+
+-- 4) Promociones vigentes por cine (ejemplo cine_id = 1)
+SELECT DISTINCT pr.promo_id, pr.pelicula_id, p.titulo, pr.descripcion, pr.descuento, pr.fecha_inicio, pr.fecha_fin, pr.tipo
+FROM promociones pr
+JOIN peliculas p ON pr.pelicula_id = p.pelicula_id
+JOIN funciones f ON f.pelicula_id = p.pelicula_id
+JOIN salas s ON f.sala_id = s.sala_id
+WHERE s.cine_id = 1
+  AND pr.fecha_inicio <= CURDATE() AND pr.fecha_fin >= CURDATE()
+ORDER BY pr.fecha_inicio;
+
+-- 5) Funciones disponibles para una película específica (ej: pelicula_id = 1)
+SELECT f.funcion_id, f.fecha, f.hora, s.nombre AS sala, c.nombre AS cine, f.formato, f.precio
+FROM funciones f
+JOIN salas s ON f.sala_id = s.sala_id
+JOIN cines c ON s.cine_id = c.cine_id
+WHERE f.pelicula_id = 1
+ORDER BY f.fecha, f.hora;
+
+INSERT INTO peliculas (titulo, genero, duracion, clasificacion, idioma_original, pais_origen, anio_produccion)
+VALUES ('Prueba Pelicula Entrega', 'Drama', 95, '+13', 'Español', 'Colombia', 2025);
+
+-- Verificar INSERT
+SELECT pelicula_id, titulo FROM peliculas WHERE titulo = 'Prueba Pelicula Entrega';
+
+-- INSERT cliente y reserva (ejemplo)
+INSERT INTO clientes (nombre, correo, telefono)
+VALUES ('Alumno Prueba', 'alumno.prueba@example.com', '+57 3000000000');
+
+-- Obtener cliente_id recien creado
+SELECT cliente_id FROM clientes WHERE correo='alumno.prueba@example.com' ORDER BY fecha_registro DESC LIMIT 1;
+
+-- Asumir funcion_id disponible (si no existe, consulta primero SELECT funcion_id FROM funciones LIMIT 1)
+INSERT INTO reservas (cliente_id, funcion_id, cantidad, total)
+SELECT c.cliente_id, f.funcion_id, 2, f.precio * 2
+FROM clientes c, funciones f
+WHERE c.correo='alumno.prueba@example.com' AND f.funcion_id = 1
+LIMIT 1;
+
+-- Verificar reserva
+SELECT r.reserva_id, c.nombre, r.cantidad, r.total FROM reservas r JOIN clientes c ON r.cliente_id = c.cliente_id WHERE c.correo='alumno.prueba@example.com';
+
+-- UPDATE: ajustar duración de la película de prueba
+UPDATE peliculas SET duracion = 100 WHERE titulo = 'Prueba Pelicula Entrega';
+SELECT pelicula_id, titulo, duracion FROM peliculas WHERE titulo = 'Prueba Pelicula Entrega';
+
+-- DELETE: eliminar reserva y cliente de prueba
+DELETE r FROM reservas r JOIN clientes c ON r.cliente_id = c.cliente_id WHERE c.correo='alumno.prueba@example.com';
+DELETE FROM clientes WHERE correo='alumno.prueba@example.com';
+
+-- DELETE: eliminar la película de prueba
+DELETE FROM peliculas WHERE titulo = 'Prueba Pelicula Entrega';
+
+-- Verificación final: no debe existir la pelicula de prueba
+SELECT pelicula_id, titulo FROM peliculas WHERE titulo = 'Prueba Pelicula Entrega';
+
