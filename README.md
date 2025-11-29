@@ -1,7 +1,7 @@
 # Parcial - App Cine (7502420046_18_appcine_v2)
 **Alumno:** Kevin Antonio González  
 **Repositorio:** https://github.com/kevin250313/parcial-bases-datos-kevin
-
+**Enlace video:** https://youtu.be/koY1I-rhL98 
 ---
 
 ## Descripción
